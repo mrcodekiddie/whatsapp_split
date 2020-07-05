@@ -21,9 +21,11 @@ else:
         clip_count = int(clip.duration/30)
 
 print( str(clip.duration) + " for "+ str(clip_count)+" clips" )
-
-save_path = "C:\\Users\\"+os.getlogin()+"\\Videos\\Whatsapp_splitter\\" + file_name.split("/")[-1].split(".")[0] + "\\"
-
+save_path='yee'
+if(os.name=='nt'):
+        save_path = "C:\\Users\\"+os.getlogin()+"\\Videos\\Whatsapp_splitter\\" + file_name.split("/")[-1].split(".")[0] + "\\"
+if(os.name=='posix'):
+        save_path = os.path.join(os.getenv("HOME"),'Videos','Whatsapp_splitter',file_name.split(os.sep)[-1].split(".")[0])
 if not os.path.exists(save_path):
 	os.makedirs(save_path)
 def get_first(i):
@@ -35,13 +37,13 @@ def get_first(i):
 def get_i(i):
         with VideoFileClip(file_name) as video:
                 new = video.subclip((i*30), (i+1)*30)
-                new.write_videofile(save_path+"clip"+str(i)+".mp4", audio_codec='aac')
+                new.write_videofile(save_path+"clip_"+str(i+1)+".mp4", audio_codec='aac')
                 
 
 def get_last(i):
         with VideoFileClip(file_name) as video:
                 new = video.subclip((clip_count-1)*30, clip.duration)
-                new.write_videofile(save_path+"clip"+str(clip_count-1)+".mp4", audio_codec='aac')
+                new.write_videofile(save_path+"clip_"+str(clip_count-1)+".mp4", audio_codec='aac')
                 
         
         
